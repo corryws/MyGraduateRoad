@@ -54,6 +54,18 @@
       </div>
     </div>
 
+    <div class="data-row">
+      <button class="data-btn" onclick="Data.esporta()">
+        <span class="material-icons">download</span>
+        Esporta JSON
+      </button>
+      <button class="data-btn" onclick="Data.importaClick()">
+        <span class="material-icons">upload</span>
+        Importa JSON
+      </button>
+    </div>
+    <input type="file" id="import-input" accept=".json" style="display:none;" onchange="Data.importa(event)" />
+
     <div class="section-title">Ultimi superati</div>
     <div id="recent-list">
       <div class="empty-state">
@@ -184,6 +196,7 @@
 </div>
 
 <script src="js/store.js"></script>
+<script src="js/data.js"></script>
 <script src="js/home.js"></script>
 <script src="js/graduate.js"></script>
 <script src="js/materie.js"></script>

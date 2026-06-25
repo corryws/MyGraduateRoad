@@ -24,7 +24,14 @@ const Home = (() => {
 
   function _renderRecent(completate) {
     const el     = document.getElementById('recent-list');
-    const recent = [...completate].reverse().slice(0,5);
+    const recent = [...completate]
+      .sort((a, b) => {
+        if (!a.data && !b.data) return 0;
+        if (!a.data) return 1;
+        if (!b.data) return -1;
+        return new Date(b.data) - new Date(a.data);
+      })
+      .slice(0, 5);
     if (!recent.length) {
       el.innerHTML = `<div class="empty-state"><span class="material-icons">school</span><p>Ancora nessun esame completato.</p></div>`;
       return;

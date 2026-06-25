@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Laurea Tracker</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/screens.css" />
+</head>
+<body>
+<div id="app">
+
+  <!-- TOP BAR -->
+  <div class="topbar">
+    <h1 id="topbar-title">Dashboard</h1>
+    <p id="topbar-sub">Ciao! Tieni traccia del tuo percorso 🎓</p>
+  </div>
+
+  <!-- HOME SCREEN -->
+  <div class="screen active" id="screen-home">
+    <div class="stats-grid">
+      <div class="stat-card accent">
+        <div class="stat-label">Media voti</div>
+        <div class="stat-value" id="stat-media">–</div>
+        <div class="stat-sub" id="stat-media-sub">nessun voto</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Esami</div>
+        <div class="stat-value" id="stat-esami">0</div>
+        <div class="stat-sub" id="stat-esami-sub">di 0 totali</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">CFU conseguiti</div>
+        <div class="stat-value" id="stat-cfu">0</div>
+        <div class="stat-sub" id="stat-cfu-sub">di 0 totali</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Completamento</div>
+        <div class="stat-value" id="stat-perc">0%</div>
+        <div class="stat-sub">in base ai CFU</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="progress-header">
+        <span class="section-title" style="margin:0;">Avanzamento CFU</span>
+        <span id="prog-label" class="prog-label-text">0 / 0</span>
+      </div>
+      <div class="progress-bar-wrap">
+        <div class="progress-bar-fill" id="progress-fill" style="width:0%"></div>
+      </div>
+    </div>
+
+    <div class="section-title">Ultimi superati</div>
+    <div id="recent-list">
+      <div class="empty-state">
+        <span class="material-icons">school</span>
+        <p>Ancora nessun esame completato.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- GRADUATE SCREEN -->
+  <div class="screen" id="screen-graduate">
+    <div class="laurea-header">
+      <h2>Corona d'Alloro</h2>
+      <p>Ogni petalo rappresenta un esame superato</p>
+    </div>
+
+    <div class="corona-wrap">
+      <svg class="corona-svg" viewBox="0 0 240 240" id="corona-svg"></svg>
+    </div>
+
+    <div class="voto-finale-card" id="voto-finale-card">
+      <div class="vf-label">Voto di laurea stimato</div>
+      <div class="vf-value" id="vf-value">–</div>
+      <div class="vf-sub" id="vf-sub">Completa almeno un esame</div>
+    </div>
+
+    <div class="lode-toggle">
+      <div class="lt-left">
+        <span class="material-icons">star</span>
+        <div>
+          <div class="lt-label">Lode alla tesi</div>
+          <div class="lt-sub">Aggiunge 1 punto al voto finale</div>
+        </div>
+      </div>
+      <label class="toggle-switch">
+        <input type="checkbox" id="lode-check" onchange="Graduate.updateSummary()" />
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+
+    <div class="lode-toggle">
+      <div class="lt-left">
+        <span class="material-icons">emoji_events</span>
+        <div>
+          <div class="lt-label">Bonus commissione</div>
+          <div class="lt-sub">Aggiunge 1 punto al voto finale</div>
+        </div>
+      </div>
+      <label class="toggle-switch">
+        <input type="checkbox" id="bonus-check" onchange="Graduate.updateSummary()" />
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+  </div>
+
+  <!-- MATERIE SCREEN -->
+  <div class="screen" id="screen-materie">
+    <div class="filter-row">
+      <button class="filter-chip active" onclick="Materie.setFilter('all', this)">Tutte</button>
+      <button class="filter-chip" onclick="Materie.setFilter('completata', this)">Completate</button>
+      <button class="filter-chip" onclick="Materie.setFilter('in-corso', this)">In corso</button>
+      <button class="filter-chip" onclick="Materie.setFilter('da-fare', this)">Da fare</button>
+    </div>
+    <div id="materie-list"></div>
+  </div>
+
+  <!-- BOTTOM NAV: Graduate | Home | Materie -->
+  <nav class="bottom-nav">
+    <button class="nav-item" id="nav-graduate" onclick="Nav.goTo('graduate', this)">
+      <span class="material-icons">local_florist</span>
+      <span class="label">Graduate</span>
+    </button>
+    <button class="nav-item active" id="nav-home" onclick="Nav.goTo('home', this)">
+      <span class="material-icons">dashboard</span>
+      <span class="label">Home</span>
+    </button>
+    <button class="nav-item" id="nav-materie" onclick="Nav.goTo('materie', this)">
+      <span class="material-icons">menu_book</span>
+      <span class="label">Materie</span>
+    </button>
+  </nav>
+</div>
+
+<!-- FAB -->
+<button class="fab hidden" id="fab" onclick="Modal.openAdd()">
+  <span class="material-icons">add</span>
+</button>
+
+<!-- MODAL -->
+<div class="modal-backdrop" id="modal" onclick="Modal.closeOnBackdrop(event)">
+  <div class="modal-box" id="modal-box">
+    <div class="modal-handle"></div>
+    <h3 id="modal-title">Aggiungi materia</h3>
+
+    <div class="form-field">
+      <label>Nome materia</label>
+      <input type="text" id="f-nome" placeholder="es. Analisi 2" />
+    </div>
+    <div class="form-field">
+      <label>CFU</label>
+      <input type="number" id="f-cfu" placeholder="6" min="1" max="30" />
+    </div>
+    <div class="form-field">
+      <label>Stato</label>
+      <select id="f-stato" onchange="Modal.toggleVotoField()">
+        <option value="da-fare">Da fare</option>
+        <option value="in-corso">In corso</option>
+        <option value="completata">Completata</option>
+      </select>
+    </div>
+    <div class="form-field" id="voto-field" style="display:none;">
+      <label>Voto (18–30)</label>
+      <input type="number" id="f-voto" placeholder="30" min="18" max="30" />
+    </div>
+    <div class="form-field" id="lode-field" style="display:none;">
+      <label class="lode-label">
+        <input type="checkbox" id="f-lode" />
+        Con lode
+      </label>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-secondary" onclick="Modal.close()">Annulla</button>
+      <button class="btn btn-danger" id="btn-delete" onclick="Modal.deleteMateria()" style="display:none;">Elimina</button>
+      <button class="btn btn-primary" onclick="Modal.save()">Salva</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/store.js"></script>
+<script src="js/home.js"></script>
+<script src="js/graduate.js"></script>
+<script src="js/materie.js"></script>
+<script src="js/modal.js"></script>
+<script src="js/nav.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

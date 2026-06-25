@@ -1,0 +1,168 @@
+/* ── HOME SCREEN ─────────────────────────────────────────────── */
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.stat-card {
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius);
+  padding: 16px 14px;
+  box-shadow: var(--shadow-sm);
+}
+.stat-card.accent {
+  background: var(--red);
+  border-color: var(--red);
+  color: var(--white);
+}
+.stat-card .stat-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--gray-400);
+  margin-bottom: 6px;
+}
+.stat-card.accent .stat-label { color: rgba(255,255,255,0.72); }
+.stat-card .stat-value {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1;
+}
+.stat-card .stat-sub {
+  font-size: 11px;
+  color: var(--gray-400);
+  margin-top: 4px;
+}
+.stat-card.accent .stat-sub { color: rgba(255,255,255,0.65); }
+
+/* ── GRADUATE SCREEN ─────────────────────────────────────────── */
+.laurea-header {
+  text-align: center;
+  padding: 20px 16px 8px;
+}
+.laurea-header h2 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.laurea-header p {
+  font-size: 13px;
+  color: var(--gray-400);
+}
+
+.corona-wrap {
+  display: flex;
+  justify-content: center;
+  margin: 12px 0 20px;
+}
+.corona-svg {
+  width: 220px;
+  height: 220px;
+}
+
+.voto-finale-card {
+  background: var(--gray-50);
+  border: 2px solid var(--gray-200);
+  border-radius: var(--radius);
+  padding: 20px;
+  text-align: center;
+  margin-bottom: 12px;
+  transition: background 0.3s, border-color 0.3s;
+}
+.voto-finale-card.complete {
+  background: #fff8e1;
+  border-color: var(--yellow);
+}
+.voto-finale-card .vf-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--gray-400);
+  margin-bottom: 8px;
+}
+.voto-finale-card .vf-value {
+  font-size: 52px;
+  font-weight: 700;
+  color: var(--gray-800);
+  line-height: 1;
+}
+.voto-finale-card .vf-sub {
+  font-size: 12px;
+  color: var(--gray-400);
+  margin-top: 6px;
+}
+
+.lode-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius);
+  margin-bottom: 10px;
+  box-shadow: var(--shadow-sm);
+}
+.lode-toggle .lt-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.lode-toggle .lt-left > .material-icons { color: var(--red); font-size: 22px; }
+.lode-toggle .lt-label { font-size: 14px; font-weight: 600; }
+.lode-toggle .lt-sub { font-size: 11px; color: var(--gray-400); margin-top: 1px; }
+
+/* ── MATERIE SCREEN ──────────────────────────────────────────── */
+.materia-card {
+  background: var(--white);
+  border: 1.5px solid var(--gray-200);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  border-left-width: 4px;
+}
+.materia-card:active { box-shadow: var(--shadow-md); }
+.materia-card.completata { border-left-color: var(--green); }
+.materia-card.in-corso   { border-left-color: var(--yellow); }
+.materia-card.da-fare    { border-left-color: var(--gray-200); }
+
+.materia-card .mc-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.materia-card.completata .mc-icon { background: var(--green-light); }
+.materia-card.completata .mc-icon .material-icons { color: var(--green); font-size: 20px; }
+.materia-card.in-corso   .mc-icon { background: var(--yellow-light); }
+.materia-card.in-corso   .mc-icon .material-icons { color: #c98a00; font-size: 20px; }
+.materia-card.da-fare    .mc-icon { background: var(--gray-100); }
+.materia-card.da-fare    .mc-icon .material-icons { color: var(--gray-400); font-size: 20px; }
+
+.materia-card .mc-info { flex: 1; min-width: 0; }
+.materia-card .mc-name { font-size: 14px; font-weight: 600; }
+.materia-card .mc-meta { font-size: 11px; color: var(--gray-400); margin-top: 2px; }
+
+.materia-card .mc-voto {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--green);
+  flex-shrink: 0;
+}
+.materia-card .mc-voto.lode {
+  font-size: 15px;
+  color: #c98a00;
+}

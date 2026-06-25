@@ -1,0 +1,6 @@
+# netlify.toml
+# Since this is a pure static SPA (single index.html),
+# no redirects needed. Netlify serves index.html at root.
+
+[build]
+  publish = "."

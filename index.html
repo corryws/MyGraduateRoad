@@ -16,6 +16,19 @@
   <link rel="stylesheet" href="css/screens.css" />
 </head>
 <body>
+
+  <!-- PWA INSTALL BANNER -->
+<div id="pwa-banner" class="pwa-banner hidden">
+  <span class="material-icons pwa-icon">ios_share</span>
+  <div class="pwa-text">
+    <strong>Aggiungi alla Home</strong>
+    <span>Tocca <span class="material-icons" style="font-size:14px;vertical-align:middle;">ios_share</span> poi "Aggiungi a schermata Home"</span>
+  </div>
+  <button class="pwa-close" onclick="PWA.dismiss()">
+    <span class="material-icons">close</span>
+  </button>
+</div>
+
 <div id="app">
 
   <!-- TOP BAR -->
@@ -291,5 +304,6 @@
 <script src="js/modal.js"></script>
 <script src="js/nav.js"></script>
 <script src="js/main.js"></script>
+<script src="js/pwa.js"></script>
 </body>
 </html>

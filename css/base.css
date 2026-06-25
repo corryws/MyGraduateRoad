@@ -1,37 +1,55 @@
-/* ── VARIABLES & RESET ───────────────────────────────────────── */
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+/* ── VARIABLES (light) ───────────────────────────────────────── */
+:root {
+  --red:         #DC3545;
+  --red-light:   #f8d7da;
+  --red-dark:    #b02a37;
+  --green:       #28a745;
+  --green-light: #d4edda;
+  --yellow:      #ffc107;
+  --yellow-light:#fff3cd;
+
+  --bg:          #ffffff;
+  --bg-2:        #f9f9f9;
+  --surface:     #ffffff;
+  --border:      #e0e0e0;
+  --border-soft: #f0f0f0;
+  --text-1:      #212121;
+  --text-2:      #616161;
+  --text-3:      #9e9e9e;
+
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.10);
+  --radius:    12px;
+  --nav-height:64px;
 }
 
-:root {
-  --red:        #DC3545;
-  --red-light:  #f8d7da;
-  --red-dark:   #b02a37;
-  --green:      #28a745;
-  --green-light:#d4edda;
-  --yellow:     #ffc107;
-  --yellow-light:#fff3cd;
-  --white:      #ffffff;
-  --gray-50:    #f9f9f9;
-  --gray-100:   #f0f0f0;
-  --gray-200:   #e0e0e0;
-  --gray-400:   #9e9e9e;
-  --gray-600:   #616161;
-  --gray-800:   #212121;
-  --shadow-sm:  0 1px 3px rgba(0,0,0,0.08);
-  --shadow-md:  0 4px 12px rgba(0,0,0,0.10);
-  --radius:     12px;
-  --nav-height: 64px;
+/* ── DARK THEME ──────────────────────────────────────────────── */
+[data-theme="dark"] {
+  --bg:          #121212;
+  --bg-2:        #1e1e1e;
+  --surface:     #1e1e1e;
+  --border:      #333333;
+  --border-soft: #2a2a2a;
+  --text-1:      #f0f0f0;
+  --text-2:      #aaaaaa;
+  --text-3:      #666666;
+  --red-light:   rgba(220,53,69,0.18);
+  --green-light: rgba(40,167,69,0.18);
+  --yellow-light:rgba(255,193,7,0.18);
+  --shadow-sm:   0 1px 3px rgba(0,0,0,0.3);
+  --shadow-md:   0 4px 12px rgba(0,0,0,0.4);
 }
+
+/* ── RESET ───────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 html, body {
   height: 100%;
   font-family: 'Inter', sans-serif;
-  background: var(--white);
-  color: var(--gray-800);
+  background: var(--bg);
+  color: var(--text-1);
   -webkit-font-smoothing: antialiased;
+  transition: background 0.25s, color 0.25s;
 }
 
 /* ── APP SHELL ───────────────────────────────────────────────── */
@@ -41,38 +59,52 @@ html, body {
   height: 100dvh;
   display: flex;
   flex-direction: column;
-  background: var(--white);
+  background: var(--bg);
   position: relative;
 }
 
 /* ── TOP BAR ─────────────────────────────────────────────────── */
 .topbar {
-  padding: 16px 20px 12px;
-  background: var(--white);
-  border-bottom: 1px solid var(--gray-100);
+  padding: 14px 16px 12px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border-soft);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.topbar-left h1 {
+  font-size: 21px;
+  font-weight: 700;
+  color: var(--text-1);
+  cursor: pointer;
+}
+.topbar-left h1:hover { text-decoration: underline; }
+.topbar-left p {
+  font-size: 13px;
+  color: var(--text-3);
+  margin-top: 1px;
+}
+.theme-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--bg-2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-2);
+  transition: background 0.15s;
   flex-shrink: 0;
 }
-.topbar h1 {
-  font-size: 22px;
-  font-weight: 700;
-  color: var(--gray-800);
-}
-.topbar p {
-  font-size: 13px;
-  color: var(--gray-400);
-  margin-top: 2px;
-}
+.theme-btn:hover { background: var(--border); }
+.theme-btn .material-icons { font-size: 20px; }
 
 /* ── SCREENS ─────────────────────────────────────────────────── */
-.screen {
-  flex: 1;
-  overflow-y: auto;
-  padding: 16px 16px 8px;
-  display: none;
-}
-.screen.active {
-  display: block;
-}
+.screen { flex: 1; overflow-y: auto; padding: 16px 16px 8px; display: none; }
+.screen.active { display: block; }
 
 /* ── BOTTOM NAV ──────────────────────────────────────────────── */
 .bottom-nav {
@@ -96,64 +128,37 @@ html, body {
   gap: 3px;
   transition: color 0.18s;
 }
-.nav-item.active {
-  color: var(--white);
-}
-.nav-item .material-icons {
-  font-size: 24px;
-}
-.nav-item .label {
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.4px;
-  text-transform: uppercase;
-}
+.nav-item.active { color: #fff; }
+.nav-item .material-icons { font-size: 24px; }
+.nav-item .label { font-size: 10px; font-weight: 600; letter-spacing: 0.4px; text-transform: uppercase; }
 
 /* ── FAB ─────────────────────────────────────────────────────── */
 .fab {
   position: fixed;
   bottom: calc(var(--nav-height) + 16px);
   right: 20px;
-  width: 52px;
-  height: 52px;
+  width: 52px; height: 52px;
   border-radius: 50%;
   background: var(--red);
-  color: var(--white);
+  color: #fff;
   border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: flex; align-items: center; justify-content: center;
   cursor: pointer;
   box-shadow: 0 4px 16px rgba(220,53,69,0.38);
   z-index: 50;
-  transition: transform 0.15s, opacity 0.15s;
+  transition: transform 0.15s;
 }
 .fab:active { transform: scale(0.92); }
 .fab.hidden { display: none; }
 .fab .material-icons { font-size: 26px; }
 
-/* ── EMPTY STATE ─────────────────────────────────────────────── */
-.empty-state {
-  text-align: center;
-  padding: 48px 20px;
-  color: var(--gray-400);
-}
-.empty-state .material-icons {
-  font-size: 48px;
-  margin-bottom: 12px;
-  display: block;
-  opacity: 0.35;
-}
-.empty-state p {
-  font-size: 14px;
-}
-
-/* ── TYPOGRAPHY HELPERS ──────────────────────────────────────── */
+/* ── HELPERS ─────────────────────────────────────────────────── */
 .section-title {
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.7px;
-  color: var(--gray-400);
+  font-size: 11px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.7px;
+  color: var(--text-3);
   margin: 20px 0 10px;
 }
+.empty-state { text-align: center; padding: 40px 20px; color: var(--text-3); }
+.empty-state .material-icons { font-size: 44px; margin-bottom: 10px; display: block; opacity: 0.35; }
+.empty-state p { font-size: 14px; }
